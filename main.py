@@ -17,8 +17,12 @@ try:
     song_data = TimeMachine(date)
     print(song_data.top_100_songs)
     game = GameBrain(song_data.top_100_songs)
+    game.next_song()
     print(game.song1)
     print(game.song2)
+    print(game.check_answer("A"))
+    print(game.reveal_rank())
+
 
 except AssertionError:
     print("Can't travel to this date, please choose another.")

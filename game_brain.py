@@ -46,3 +46,11 @@ class GameBrain:
         else:
             return False
 
+    def reveal_rank(self):
+        """
+        Shows what rank the songs chosen are in the list.
+        """
+        song1_rank = self.song_data.index(self.song1) + 1
+        song2_rank = self.song_data.index(self.song2) + 1
+        return (song1_rank, song2_rank)
+
