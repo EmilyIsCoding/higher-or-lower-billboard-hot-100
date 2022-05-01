@@ -1,16 +1,24 @@
 import datetime
 from billboard_hot_100_data import TimeMachine
+from game_brain import GameBrain
 
 
-def validate(date):
+def validate(date_text):
     try:
-        datetime.datetime.strptime(date, '%Y-%m-%d')
+        datetime.datetime.strptime(date_text, '%Y-%m-%d')
     except ValueError:
-        return False
+        return "ValueError"
 
 
 date = input("Which year do you want to travel to? Type in this format: YYYY-MM-DD: ")
-while validate(date) == False:
+while validate(date) == "ValueError":
     date = input("Which year do you want to travel to? Type in this format: YYYY-MM-DD: ")
-song_data = TimeMachine(date)
-print(song_data.top_100_songs)
+try:
+    song_data = TimeMachine(date)
+    print(song_data.top_100_songs)
+    game = GameBrain(song_data.top_100_songs)
+    print(game.song1)
+    print(game.song2)
+
+except AssertionError:
+    print("Can't travel to this date, please choose another.")
