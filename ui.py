@@ -75,23 +75,57 @@ class GameInterface:
         )
         self.song2_text.grid(column=2, row=3)
 
-        self.higher = Button(
-            text="Higher",
-            bg="white",
-            fg="black",
-            highlightthickness=0,
+        self.song2_rank = Label(
+            text="#{Hidden-Rank}",
+            font=("Arial", 20),
+            fg="white",
+            bg="black"
         )
-        self.higher.grid(column=2, row=4)
+        self.song2_rank.grid(column=2, row=4)
 
-        self.lower = Button(
-            text="Lower",
-            bg="white",
-            fg="black",
+        # Higher or Lower Buttons #
+        higher_image = PhotoImage(file="./images/higher_button.png")
+        self.higher = Button(
+            image=higher_image,
             highlightthickness=0,
+            bd=0
         )
-        self.lower.grid(column=2, row=5)
+        self.higher.grid(column=2, row=5)
+
+        lower_image = PhotoImage(file="./images/lower_button.png")
+        self.lower = Button(
+            image=lower_image,
+            highlightthickness=0,
+            bd=0
+        )
+        self.lower.grid(column=2, row=6)
+
+        # Pocket Watch #
+        self.time_machine_date = Label(
+            text="{yyyy-mm-dd}",
+            font=("Arial", 15),
+            fg="white",
+            bg="black"
+        )
+        self.time_machine_date.grid(column=0, row=5)
+
+        pocket_watch_image = PhotoImage(file="./images/pocket_watch.png")
+        self.pocket_watch = Label(
+            image=pocket_watch_image,
+            font=("Arial", 15),
+            fg="white",
+            bg="black"
+        )
+        self.pocket_watch.grid(column=0, row=6)
+
+
 
         self.window.mainloop()
 
 
+
 test = GameInterface()
+
+# TODO: Find a way to make the buttons disappear and reveal a rank later? Can just modify by writing in the label.
+# TODO: Map functions to buttons (have them modify the labels)
+# TODO: Find a placeholder image for the bottom left, maybe where you time travelled to?
