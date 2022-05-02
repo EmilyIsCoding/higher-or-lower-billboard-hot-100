@@ -1,3 +1,4 @@
+import tkinter.messagebox
 from tkinter import *
 from game_brain import GameBrain
 
@@ -7,7 +8,7 @@ class GameInterface:
 
     def __init__(self, game_brain: GameBrain):
         """
-        User interface for the game. Parameter: GameBrain class.
+        User interface for the game, displays the first two songs. Parameter: GameBrain class.
         """
         self.game = game_brain
         self.window = Tk()
@@ -17,9 +18,9 @@ class GameInterface:
         self.score = Label(text="Score: 0", fg="white", bg=THEME_COLOR)
         self.score.grid(column=2, row=0)
 
-        self.canvas = Canvas(width=400, height=170, bg=THEME_COLOR, highlightthickness=0, bd=0)
+        self.canvas = Canvas(width=600, height=170, bg=THEME_COLOR, highlightthickness=0, bd=0)
         billboard_image = PhotoImage(file="./images/billboard_hot_100_template.png")
-        self.canvas.create_image(200, 100, image=billboard_image)
+        self.canvas.create_image(300, 100, image=billboard_image)
         self.canvas.grid(column=0, row=1, columnspan=3)
 
         # Song1 Labels #
@@ -27,7 +28,9 @@ class GameInterface:
             text="Placeholder1",
             font=("Arial", 20, "italic"),
             fg="white",
-            bg="black"
+            bg="black",
+            wraplength=200,
+            justify="left"
         )
         self.song1_label.grid(column=0, row=2)
 
@@ -64,6 +67,8 @@ class GameInterface:
             font=("Arial", 20, "italic"),
             fg="white",
             bg="black",
+            wraplength=200,
+            justify="right"
         )
         self.song2_label.grid(column=2, row=2)
 
@@ -76,7 +81,7 @@ class GameInterface:
         self.song2_text.grid(column=2, row=3)
 
         self.song2_rank = Label(
-            text="#{Hidden-Rank}",
+            text="???",
             font=("Arial", 20),
             fg="white",
             bg="black"
@@ -131,6 +136,10 @@ class GameInterface:
             self.song1_label.config(text=self.game.song1)
             self.song1_rank.config(text=self.game.reveal_rank()[0])
             self.song2_label.config(text=self.game.song2)
+        else:
+            tkinter.messagebox.showinfo("Congratulations!", "You got all the songs right!")
+            self.higher.config(state="disabled")
+            self.lower.config(state="disabled")
 
 # TODO: Find a way to make the buttons disappear and reveal a rank later? Can just modify by writing in the label.
 # TODO: Map functions to buttons (have them modify the labels)
