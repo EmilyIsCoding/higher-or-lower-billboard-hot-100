@@ -16,6 +16,9 @@ class GameBrain:
         self.answer = None
         self.score = 0
 
+    def still_has_songs(self):
+        return len(songs_chosen) != len(self.song_data)
+
     def next_song(self):
         """
         Assigns song1 as the value of song2.

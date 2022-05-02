@@ -5,11 +5,11 @@ THEME_COLOR = "Black"
 
 class GameInterface:
 
-    def __init__(self):
+    def __init__(self, game_brain: GameBrain):
         """
         User interface for the game. Parameter: GameBrain class.
         """
-        # self.game = game_brain
+        self.game = game_brain
         self.window = Tk()
         self.window.title("Higher or Lower: The Billboard Hot 100 Edition")
         self.window.config(padx=20, pady=20, bg=THEME_COLOR)
@@ -118,14 +118,21 @@ class GameInterface:
         )
         self.pocket_watch.grid(column=0, row=6)
 
-
+        # Area to get next song #
+        self.next_song()
 
         self.window.mainloop()
 
-
-
-test = GameInterface()
+    def next_song(self):
+        self.canvas.config(bg="black")
+        self.score.config(text=f"Score: {self.game.score}")
+        if self.game.still_has_songs():
+            self.game.next_song()
+            self.song1_label.config(text=self.game.song1)
+            self.song1_rank.config(text=self.game.reveal_rank()[0])
+            self.song2_label.config(text=self.game.song2)
 
 # TODO: Find a way to make the buttons disappear and reveal a rank later? Can just modify by writing in the label.
 # TODO: Map functions to buttons (have them modify the labels)
 # TODO: Find a placeholder image for the bottom left, maybe where you time travelled to?
+# TODO: How to make text wrap/go into the next line...
