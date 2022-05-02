@@ -16,6 +16,7 @@ class TimeMachine:
         -------
         list: [(Song by Artist)]
         """
+        self.date = date
         self.URL = f"https://www.billboard.com/charts/hot-100/" + date
         self.response = requests.get(self.URL)
         self.top_100_songs_page = self.response.text

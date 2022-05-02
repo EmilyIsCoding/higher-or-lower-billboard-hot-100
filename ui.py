@@ -1,6 +1,7 @@
 import tkinter.messagebox
 from tkinter import *
 from game_brain import GameBrain
+import billboard_hot_100_data
 
 THEME_COLOR = "Black"
 
@@ -54,12 +55,12 @@ class GameInterface:
         # Versus Label #
         self.versus_label = Label(
             text="Vs.",
-            font=("Arial", 15, "bold"),
+            font=("Arial", 20, "bold"),
             fg="white",
             bg="black",
             height=1
         )
-        self.versus_label.grid(column=1, row=2)
+        self.versus_label.grid(column=1, row=2, columnspan=1)
 
         # Song2 Labels #
         self.song2_label = Label(
@@ -93,7 +94,8 @@ class GameInterface:
         self.higher = Button(
             image=higher_image,
             highlightthickness=0,
-            bd=0
+            bd=0,
+            command=self.higher_pressed
         )
         self.higher.grid(column=2, row=5)
 
@@ -101,7 +103,8 @@ class GameInterface:
         self.lower = Button(
             image=lower_image,
             highlightthickness=0,
-            bd=0
+            bd=0,
+            command=self.lower_pressed
         )
         self.lower.grid(column=2, row=6)
 
@@ -123,13 +126,14 @@ class GameInterface:
         )
         self.pocket_watch.grid(column=0, row=6)
 
-        # Area to get next song #
         self.next_song()
 
         self.window.mainloop()
 
     def next_song(self):
-        self.canvas.config(bg="black")
+        self.window.config(bg=THEME_COLOR)
+        self.versus_label.config(text="Vs.", bg=THEME_COLOR)
+        self.song2_rank.config(text="???")
         self.score.config(text=f"Score: {self.game.score}")
         if self.game.still_has_songs():
             self.game.next_song()
@@ -141,7 +145,23 @@ class GameInterface:
             self.higher.config(state="disabled")
             self.lower.config(state="disabled")
 
+    def higher_pressed(self):
+        self.give_feedback(self.game.check_answer("B"))
+
+    def lower_pressed(self):
+        self.give_feedback(self.game.check_answer("A"))
+
+    def give_feedback(self, is_right):
+        self.song2_rank.config(text=f"{self.game.reveal_rank()[1]}")
+        if is_right:
+            self.versus_label.after(500, self.versus_label.config(text="✓", bg="green"))
+        else:
+            self.versus_label.after(500, self.versus_label.config(text="X", bg="red"))
+        self.canvas.update()
+        self.window.after(500, self.next_song())
+
 # TODO: Find a way to make the buttons disappear and reveal a rank later? Can just modify by writing in the label.
-# TODO: Map functions to buttons (have them modify the labels)
-# TODO: Find a placeholder image for the bottom left, maybe where you time travelled to?
-# TODO: How to make text wrap/go into the next line...
+# TODO: When pressing a button, give feedback colors
+# TODO: When pressing a button, reveal the RAnk first
+    # TODO: Change the Versus to a Check or Minus! In Green or Red!
+# TODO: When getting the answer wrong, end the game and display a pop-up with the final score.
