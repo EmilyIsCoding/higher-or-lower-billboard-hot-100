@@ -29,6 +29,14 @@ class GameBrain:
             self.song2 = random.choice(self.song_data)
         songs_chosen.append(self.song2)
 
+    def reveal_rank(self):
+        """
+        Shows what rank the songs chosen are in the list.
+        """
+        song1_rank = self.song_data.index(self.song1) + 1
+        song2_rank = self.song_data.index(self.song2) + 1
+        return (song1_rank, song2_rank)
+
     def check_answer(self, user_answer):
         """
         Compares user_answer for which song ranked higher in the data to the actual answer.
@@ -45,12 +53,3 @@ class GameBrain:
             return True
         else:
             return False
-
-    def reveal_rank(self):
-        """
-        Shows what rank the songs chosen are in the list.
-        """
-        song1_rank = self.song_data.index(self.song1) + 1
-        song2_rank = self.song_data.index(self.song2) + 1
-        return (song1_rank, song2_rank)
-

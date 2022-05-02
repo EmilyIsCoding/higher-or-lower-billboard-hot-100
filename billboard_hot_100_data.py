@@ -42,3 +42,10 @@ class TimeMachine:
         assert len(self.song_list) == len(self.artist_list)
         for index in range(len(self.song_list)):
             self.top_100_songs.append(self.song_list[index] + " by " + self.artist_list[index])
+
+
+
+# UI: Tkinter get() for date
+# TimeMachine asks for date
+# TimeMachine validates and loops if necessary
+# If valid, time machine scrapes
