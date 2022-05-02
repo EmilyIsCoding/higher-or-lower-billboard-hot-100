@@ -18,7 +18,7 @@ try:
     song_data = TimeMachine(date)
     print(song_data.top_100_songs)
 
-    game = GameBrain(song_data.top_100_songs)
+    game = GameBrain(song_data.top_100_songs, date)
     game_ui = GameInterface(game)
 
 except AssertionError:

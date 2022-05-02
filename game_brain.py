@@ -4,7 +4,7 @@ songs_chosen = []
 
 class GameBrain:
 
-    def __init__(self, song_data):
+    def __init__(self, song_data, date):
         """
         Takes in a list to use for the Higher or Lower game.
         Randomly assigns song2 a song from the list.
@@ -15,6 +15,7 @@ class GameBrain:
         self.song1 = None
         self.answer = None
         self.score = 0
+        self.date = date
 
     def still_has_songs(self):
         return len(songs_chosen) != len(self.song_data)

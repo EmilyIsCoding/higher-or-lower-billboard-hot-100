@@ -110,7 +110,7 @@ class GameInterface:
 
         # Pocket Watch #
         self.time_machine_date = Label(
-            text="{yyyy-mm-dd}",
+            text=f"Songs From: {self.game.date}",
             font=("Arial", 15),
             fg="white",
             bg="black"
@@ -131,6 +131,9 @@ class GameInterface:
         self.window.mainloop()
 
     def next_song(self):
+        """
+        Displays the next two songs to compare. Cleans up previous UI changes.
+        """
         self.window.config(bg=THEME_COLOR)
         self.versus_label.config(text="Vs.", bg=THEME_COLOR)
         self.song2_rank.config(text="???")
@@ -152,16 +155,18 @@ class GameInterface:
         self.give_feedback(self.game.check_answer("A"))
 
     def give_feedback(self, is_right):
+        """
+        Parameter: True/False if user's guess was correct.
+        Versus Label will change green if correct and continue the game.
+        Label will change red if incorrect and end the game.
+        """
         self.song2_rank.config(text=f"{self.game.reveal_rank()[1]}")
         if is_right:
             self.versus_label.after(500, self.versus_label.config(text="✓", bg="green"))
+            self.canvas.update()
+            self.window.after(1000, self.next_song())
         else:
             self.versus_label.after(500, self.versus_label.config(text="X", bg="red"))
-        self.canvas.update()
-        self.window.after(500, self.next_song())
-
-# TODO: Find a way to make the buttons disappear and reveal a rank later? Can just modify by writing in the label.
-# TODO: When pressing a button, give feedback colors
-# TODO: When pressing a button, reveal the RAnk first
-    # TODO: Change the Versus to a Check or Minus! In Green or Red!
-# TODO: When getting the answer wrong, end the game and display a pop-up with the final score.
+            tkinter.messagebox.showinfo("Game Over!", f"Final Score: {self.game.score}")
+            self.higher.config(state="disabled")
+            self.lower.config(state="disabled")
